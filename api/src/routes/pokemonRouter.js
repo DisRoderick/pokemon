@@ -1,22 +1,16 @@
 const { Router } = require('express')
 
 const pokemonRouter = Router()
+const { getPokemonHandler, getPokemonByIdHandler, getNameHandler, postNewPokemonHandler } = require('../handlers/pokemonHandlers.js')
 
-pokemonRouter.get('/', (req, res) => {
-    res.send('Esto va a obtener todos los pokemones')
-})
 
-pokemonRouter.get('/:id', (req, res) => {
-    res.send('esto me traera un pokemon de la api o de la base de datos por ID')
-})
+pokemonRouter.get('/', getPokemonHandler)
 
-pokemonRouter.get('/name', (req, res) => {
-    res.send('esto me traera todos los pokemones por nombre desde query')
-})
+pokemonRouter.get('/:id', getPokemonByIdHandler)
 
-pokemonRouter.post('/', (req, res) => {
-    res.send('esta ruta creara un nuevo pokemon')
-})
+pokemonRouter.get('/', getNameHandler)
+
+pokemonRouter.post('/', postNewPokemonHandler)
 
 
 module.exports = pokemonRouter

@@ -116,9 +116,7 @@ const getSearchByNameDb = async (name) => {
 const getSearchByNameApi = async (name) => {
     const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
     const arrayApiName = [response.data];
-    const arrayToObj = arrayApiName[0]
-
-
+    return cleanArray(arrayApiName)
 
 }
 

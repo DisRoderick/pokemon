@@ -18,9 +18,9 @@ const getPokemonHandler = async (req, res) => {
         if (name) {
             const responseDb = await getSearchByNameDb(name)
             const responseApi = await getSearchByNameApi(name)
-         //   if (!responseApi || !responseDb) throw Error(`no existe ningun pokemon con el nombre: ${name}`)
-           // const combined = responseApi.concat(responseDb)
-            res.status(200).json(responseDb)
+            const combined = [responseDb, ...responseApi]
+
+            res.status(200).json(combined)
         }
         else {
             const responseDb = await getAllPokemonDb()

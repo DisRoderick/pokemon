@@ -83,37 +83,24 @@ const createPokemonDb = async (
     return newPokemon;
 };
 
-
-// const getSearchByName = async (name) => {
-//     const responseDb = await Pokemon.findAll({
-//         where: {
-//             name: name
-//         }
-//     })
-
-
-//     const responseApi = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
-//         .then(response => {
-//             return response.data
-//         })
-
-
-
-// }
+//***************BUSCA POKEMONES POR SU NOMBRE */
 
 const getSearchByNameDb = async (name) => {
-    const responseDb = await Pokemon.findOne({
+    name = name.toLowerCase()
+    const responseDb = await Pokemon.findAll({
         where: {
             name: {
-                [Op.startsWith]: name
+                [Op.iLike]: `%${name}%`
             }
         }
     })
     return responseDb
 }
 
+
 // BUSCA POR NAME EN LA API
 const getSearchByNameApi = async (name) => {
+    name = name.toLowerCase()
     const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
     const arrayApiName = [response.data];
     return cleanArray(arrayApiName)

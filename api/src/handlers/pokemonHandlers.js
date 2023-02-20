@@ -1,4 +1,4 @@
-const { Pokemon, Type } = require('../db.js')
+//const { Pokemon, Type } = require('../db.js')
 
 const {
     createPokemonDb,
@@ -37,10 +37,6 @@ const getPokemonHandler = async (req, res) => {
 
 
 
-
-
-
-
 //busca popkemon por ID ****************************************
 
 const getPokemonByIdHandler = async (req, res) => {
@@ -49,24 +45,21 @@ const getPokemonByIdHandler = async (req, res) => {
     try {
         if (verify === 'string') {
             const responseDb = await searchByIdDb(id)
-            if (!responseDb) throw error(`No se encuentra el pokemon con ID: ${id}`)
+            if (!responseDb) throw new Error(`No se encuentra el pokemon con ID: ${id}`)
             return res.status(200).json(responseDb)
-        }
-        if (verify === 'number') {
+        } else if (verify === 'number') {
             const responseApi = await searchByIdApi(id)
-            if (!responseApi) throw error(`No se encuentra el pokemon con ID: ${id}`)
+            if (!responseApi) throw new Error(`No se encuentra el pokemon con ID: ${id}`)
             return res.status(200).json(responseApi)
         }
-        throw error('no se encontro el pokemon que buscabas por ID')
-        // const combined = [...responseDb, ...responseApi]
 
-        // if (combined.length === 0) throw error(`No existe el pokemon con id : ${id}`)
-
+        else throw new Error('no se encontro el pokemon que buscabas por ID')
     } catch (error) {
-        res.status(400).send(error.message)
+        res.status(400).json({ error: error.message })
     }
-
 }
+
+
 
 
 const getNameHandler = (req, res) => {

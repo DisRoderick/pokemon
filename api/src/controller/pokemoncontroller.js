@@ -114,18 +114,31 @@ const getAllPokemonDb = async () => {
 
 
 const getAllPokemonApi = async () => {
-    const arrayApi = []
-    let limit = 20
-    for (let i = 1; i < limit; i++) {
-        await axios.get(`https://pokeapi.co/api/v2/pokemon/${i}`)
-            .then(response => {
-                arrayApi.push(response.data)
+    // const arrayApi = []
+    // let limit = 20
+    // for (let i = 1; i < limit; i++) {
+    //     await axios.get(`https://pokeapi.co/api/v2/pokemon/${i}`)
+    //         .then(response => {
+    //             arrayApi.push(response.data)
 
 
-            })
+    //         })
 
+    // }
+    // return cleanArray(arrayApi)
+    const arrayApy = []
+
+    let linkApi = 'https://pokeapi.co/api/v2/pokemon'
+    while (arrayApy.length < 100) {
+        const responseApi = await axios.get(linkApi)
+            .then(response => response.data)
+        arrayApy.push(...responseApi.results)
+        linkApi = responseApi.next
     }
-    return cleanArray(arrayApi)
+    return arrayApy
+
+
+
 }
 
 
